@@ -1,0 +1,33 @@
+{
+  "dataset": "holidays",
+  "version": "2026.1",
+  "schema_version": "1.0.0",
+  "created_at": "2026-11-20T00:00:00Z",
+  "synthetic": true,
+  "coverage": {
+    "ad_years": {
+      "from": 2900,
+      "to": 2900
+    }
+  },
+  "files": [
+    {
+      "path": "data/holidays.json",
+      "sha256": "b993ea38c084f5d0210f4154b6f68a9a9cebce0f53310663d9a7d510a7243d4c",
+      "bytes": 1403,
+      "media_type": "application/json"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-synthetic",
+      "licence": "Synthetic test data",
+      "redistribution_allowed": true
+    }
+  ],
+  "review": {
+    "reviewer": "synthetic-reviewer",
+    "decision": "approved",
+    "decided_at": "2026-11-20T00:00:00Z"
+  }
+}

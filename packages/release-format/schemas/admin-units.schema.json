@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adhify.com/schemas/release-format/1/admin-units.schema.json",
+  "title": "Administrative units",
+  "description": "Province, district, municipality and ward units with validity dates, so changes over time are kept.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dataset", "version", "schema_version", "records"],
+  "properties": {
+    "dataset": { "const": "admin-units" },
+    "version": { "$ref": "common.schema.json#/$defs/version" },
+    "schema_version": { "$ref": "common.schema.json#/$defs/schemaVersion" },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "level", "name", "parent_code", "valid_from", "valid_to"],
+        "properties": {
+          "code": { "type": "string", "pattern": "^[A-Za-z0-9._-]{1,40}$" },
+          "level": { "enum": ["province", "district", "municipality", "ward"] },
+          "name": { "$ref": "common.schema.json#/$defs/name" },
+          "parent_code": {
+            "description": "Code of the unit one level up; null for a province.",
+            "type": ["string", "null"],
+            "pattern": "^[A-Za-z0-9._-]{1,40}$"
+          },
+          "valid_from": { "$ref": "common.schema.json#/$defs/date" },
+          "valid_to": {
+            "description": "Last day the unit existed in this form; null while current.",
+            "anyOf": [{ "$ref": "common.schema.json#/$defs/date" }, { "type": "null" }]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "adhify-nepal-regional-data",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "license": "Apache-2.0",
+  "scripts": {
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "test": "vitest run",
+    "fixtures:synthetic": "pnpm --filter @adhify/release-format fixtures:synthetic",
+    "validate": "node packages/release-format/src/cli.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "eslint": "9.39.5",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.73.0",
+    "vitest": "5.1.1"
+  }
+}

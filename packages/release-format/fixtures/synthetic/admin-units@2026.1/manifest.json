@@ -1,0 +1,30 @@
+{
+  "dataset": "admin-units",
+  "version": "2026.1",
+  "schema_version": "1.0.0",
+  "created_at": "2026-11-20T00:00:00Z",
+  "synthetic": true,
+  "coverage": {
+    "as_of": "2900-06-01"
+  },
+  "files": [
+    {
+      "path": "data/admin-units.json",
+      "sha256": "23b2eabfa75962c2c2193dd49cf537eac423bf02a94f88f58807f00ceac79fd3",
+      "bytes": 1789,
+      "media_type": "application/json"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-synthetic",
+      "licence": "Synthetic test data",
+      "redistribution_allowed": true
+    }
+  ],
+  "review": {
+    "reviewer": "synthetic-reviewer",
+    "decision": "approved",
+    "decided_at": "2026-11-20T00:00:00Z"
+  }
+}

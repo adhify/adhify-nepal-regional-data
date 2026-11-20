@@ -1,0 +1,73 @@
+{
+  "dataset": "admin-units",
+  "version": "2026.1",
+  "schema_version": "1.0.0",
+  "records": [
+    {
+      "code": "SP1",
+      "level": "province",
+      "name": {
+        "en": "Synthetic Province 1",
+        "ne": "कृत्रिम प्रदेश १"
+      },
+      "parent_code": null,
+      "valid_from": "2890-01-01",
+      "valid_to": null
+    },
+    {
+      "code": "SP1-D1",
+      "level": "district",
+      "name": {
+        "en": "Synthetic District 1",
+        "ne": "कृत्रिम जिल्ला १"
+      },
+      "parent_code": "SP1",
+      "valid_from": "2890-01-01",
+      "valid_to": null
+    },
+    {
+      "code": "SP1-D2",
+      "level": "district",
+      "name": {
+        "en": "Synthetic District 2 (old)",
+        "ne": "कृत्रिम जिल्ला २ (पुरानो)"
+      },
+      "parent_code": "SP1",
+      "valid_from": "2890-01-01",
+      "valid_to": "2895-12-31"
+    },
+    {
+      "code": "SP1-D2",
+      "level": "district",
+      "name": {
+        "en": "Synthetic District 2",
+        "ne": "कृत्रिम जिल्ला २"
+      },
+      "parent_code": "SP1",
+      "valid_from": "2896-01-01",
+      "valid_to": null
+    },
+    {
+      "code": "SP1-D1-M1",
+      "level": "municipality",
+      "name": {
+        "en": "Synthetic Municipality 1",
+        "ne": "कृत्रिम नगरपालिका १"
+      },
+      "parent_code": "SP1-D1",
+      "valid_from": "2890-01-01",
+      "valid_to": null
+    },
+    {
+      "code": "SP1-D1-M1-W1",
+      "level": "ward",
+      "name": {
+        "en": "Synthetic Ward 1",
+        "ne": "कृत्रिम वडा १"
+      },
+      "parent_code": "SP1-D1-M1",
+      "valid_from": "2890-01-01",
+      "valid_to": null
+    }
+  ]
+}

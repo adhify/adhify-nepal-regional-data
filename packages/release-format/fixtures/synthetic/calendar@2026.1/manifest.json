@@ -1,0 +1,33 @@
+{
+  "dataset": "calendar",
+  "version": "2026.1",
+  "schema_version": "1.0.0",
+  "created_at": "2026-11-20T00:00:00Z",
+  "synthetic": true,
+  "coverage": {
+    "bs_years": {
+      "from": 2901,
+      "to": 2903
+    }
+  },
+  "files": [
+    {
+      "path": "data/calendar.json",
+      "sha256": "5979c19bd12e04716ec3dbc7b735a5e8dc777e7dcd0d55860fcfbb7a675923ab",
+      "bytes": 831,
+      "media_type": "application/json"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-synthetic",
+      "licence": "Synthetic test data",
+      "redistribution_allowed": true
+    }
+  ],
+  "review": {
+    "reviewer": "synthetic-reviewer",
+    "decision": "approved",
+    "decided_at": "2026-11-20T00:00:00Z"
+  }
+}

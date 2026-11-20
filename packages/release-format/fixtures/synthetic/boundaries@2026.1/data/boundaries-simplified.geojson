@@ -1,0 +1,110 @@
+{
+  "type": "FeatureCollection",
+  "dataset": "boundaries",
+  "version": "2026.1",
+  "schema_version": "1.0.0",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "unit_code": "SP1",
+        "valid_from": "2890-01-01"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              2
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "unit_code": "SP1-D1",
+        "valid_from": "2890-01-01"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0,
+              0
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "unit_code": "SP1-D2",
+        "valid_from": "2896-01-01"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adhify.com/schemas/release-format/1/manifest.schema.json",
+  "title": "Adhify dataset release manifest",
+  "description": "One manifest per dataset release (ADR 0002). Signed detached as manifest.sig (Ed25519) after the founder approves the release.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "dataset",
+    "version",
+    "schema_version",
+    "created_at",
+    "coverage",
+    "files",
+    "sources"
+  ],
+  "properties": {
+    "dataset": { "$ref": "common.schema.json#/$defs/dataset" },
+    "version": { "$ref": "common.schema.json#/$defs/version" },
+    "schema_version": { "$ref": "common.schema.json#/$defs/schemaVersion" },
+    "created_at": { "$ref": "common.schema.json#/$defs/dateTime" },
+    "synthetic": {
+      "description": "True for test fixtures. A synthetic release can never be published.",
+      "type": "boolean"
+    },
+    "coverage": {
+      "description": "calendar: BS years; holidays and business-calendar: AD years; admin-units and boundaries: the date the data describes.",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "maxProperties": 1,
+      "properties": {
+        "bs_years": { "$ref": "common.schema.json#/$defs/yearRange" },
+        "ad_years": { "$ref": "common.schema.json#/$defs/yearRange" },
+        "as_of": { "$ref": "common.schema.json#/$defs/date" }
+      }
+    },
+    "depends_on": {
+      "description": "Other releases this one refers to, e.g. boundaries depend on admin-units.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^(calendar|holidays|business-calendar|admin-units|boundaries)@[0-9]{4}\\.[1-9][0-9]*$"
+      }
+    },
+    "files": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "bytes", "media_type"],
+        "properties": {
+          "path": { "type": "string", "pattern": "^data/[a-z0-9-]+(\\.[a-z0-9]+)+$" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "bytes": { "type": "integer", "minimum": 1 },
+          "media_type": { "enum": ["application/json", "application/geo+json"] }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "licence", "redistribution_allowed"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/sourceId" },
+          "licence": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "redistribution_allowed": { "type": "boolean" }
+        }
+      }
+    },
+    "review": {
+      "description": "Added when the founder decides (R1.3). Absent on a candidate release.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewer", "decision", "decided_at"],
+      "properties": {
+        "reviewer": { "type": "string", "minLength": 1, "maxLength": 100 },
+        "decision": { "enum": ["approved", "rejected"] },
+        "decided_at": { "$ref": "common.schema.json#/$defs/dateTime" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "dataset": { "const": "calendar" } } },
+      "then": { "properties": { "coverage": { "type": "object", "required": ["bs_years"] } } }
+    },
+    {
+      "if": { "properties": { "dataset": { "enum": ["holidays", "business-calendar"] } } },
+      "then": { "properties": { "coverage": { "type": "object", "required": ["ad_years"] } } }
+    },
+    {
+      "if": { "properties": { "dataset": { "enum": ["admin-units", "boundaries"] } } },
+      "then": { "properties": { "coverage": { "type": "object", "required": ["as_of"] } } }
+    },
+    {
+      "if": { "properties": { "dataset": { "const": "boundaries" } } },
+      "then": { "required": ["depends_on"] }
+    }
+  ]
+}

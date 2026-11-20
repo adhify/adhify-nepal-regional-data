@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adhify.com/schemas/release-format/1/holidays.schema.json",
+  "title": "Public holidays",
+  "description": "Holidays as stated by their source, with a status (announced, changed, cancelled). Never presented as official.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dataset", "version", "schema_version", "records"],
+  "properties": {
+    "dataset": { "const": "holidays" },
+    "version": { "$ref": "common.schema.json#/$defs/version" },
+    "schema_version": { "$ref": "common.schema.json#/$defs/schemaVersion" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "date", "name", "scope", "status", "source"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^hol-[a-z0-9-]{1,80}$" },
+          "date": { "$ref": "common.schema.json#/$defs/date" },
+          "name": { "$ref": "common.schema.json#/$defs/name" },
+          "scope": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["kind"],
+            "properties": {
+              "kind": { "enum": ["national", "province", "group"] },
+              "value": {
+                "description": "Province code (admin-units) or group label; absent for national.",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 100
+              }
+            },
+            "if": { "properties": { "kind": { "const": "national" } } },
+            "then": { "not": { "required": ["value"] } },
+            "else": { "required": ["value"] }
+          },
+          "status": { "enum": ["announced", "changed", "cancelled"] },
+          "previous_date": {
+            "description": "Required when status is changed: the date before the change.",
+            "$ref": "common.schema.json#/$defs/date"
+          },
+          "source": { "$ref": "common.schema.json#/$defs/sourceId" }
+        },
+        "if": { "properties": { "status": { "const": "changed" } } },
+        "then": { "required": ["previous_date"] },
+        "else": { "not": { "required": ["previous_date"] } }
+      }
+    }
+  }
+}

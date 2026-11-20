@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adhify.com/schemas/release-format/1/business-calendar.schema.json",
+  "title": "Business calendar",
+  "description": "Per AD year: weekly rest days, dates closed (usually holidays) and dates open despite a rest day.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dataset", "version", "schema_version", "records"],
+  "properties": {
+    "dataset": { "const": "business-calendar" },
+    "version": { "$ref": "common.schema.json#/$defs/version" },
+    "schema_version": { "$ref": "common.schema.json#/$defs/schemaVersion" },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["year", "weekly_rest_days", "closed_dates", "open_dates"],
+        "properties": {
+          "year": { "type": "integer", "minimum": 1, "maximum": 9999 },
+          "weekly_rest_days": {
+            "description": "Days of the week, 0 = Sunday … 6 = Saturday.",
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 7,
+            "items": { "type": "integer", "minimum": 0, "maximum": 6 }
+          },
+          "closed_dates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["date"],
+              "properties": {
+                "date": { "$ref": "common.schema.json#/$defs/date" },
+                "holiday_id": { "type": "string", "pattern": "^hol-[a-z0-9-]{1,80}$" }
+              }
+            }
+          },
+          "open_dates": {
+            "type": "array",
+            "items": { "$ref": "common.schema.json#/$defs/date" }
+          }
+        }
+      }
+    }
+  }
+}

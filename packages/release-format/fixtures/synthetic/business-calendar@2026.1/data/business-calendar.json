@@ -1,0 +1,25 @@
+{
+  "dataset": "business-calendar",
+  "version": "2026.1",
+  "schema_version": "1.0.0",
+  "records": [
+    {
+      "year": 2900,
+      "weekly_rest_days": [
+        6
+      ],
+      "closed_dates": [
+        {
+          "date": "2900-01-15",
+          "holiday_id": "hol-synthetic-a"
+        },
+        {
+          "date": "2900-03-02"
+        }
+      ],
+      "open_dates": [
+        "2900-03-06"
+      ]
+    }
+  ]
+}
