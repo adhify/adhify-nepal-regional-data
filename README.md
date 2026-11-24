@@ -1,6 +1,6 @@
 # adhify-nepal-regional-data
 
-The release format for Adhify's regional datasets, with its validator. Later this repository will also hold the offline SDK.
+The release format for Adhify's regional datasets, with its validator, and the offline SDK [`@adhify/regional`](packages/regional/README.md).
 
 This repository contains **no real data**. Every value under `fixtures/` is synthetic: far-future years, names that start with "Synthetic", and shapes near 0°, 0°. Real dataset releases are reviewed and approved by a person before they are published. They are distributed as release files, not kept here.
 
@@ -49,14 +49,16 @@ pnpm validate <dir> --publication --public-key <base64> [--admin-units <dir>]
 
 ## Development
 
-| Purpose                       | Command                   |
-| ----------------------------- | ------------------------- |
-| Typecheck                     | `pnpm typecheck`          |
-| Lint and formatting check     | `pnpm lint`               |
-| Tests                         | `pnpm test`               |
-| Regenerate synthetic fixtures | `pnpm fixtures:synthetic` |
+| Purpose                        | Command                                           |
+| ------------------------------ | ------------------------------------------------- |
+| Typecheck                      | `pnpm typecheck`                                  |
+| Lint and formatting check      | `pnpm lint`                                       |
+| Tests                          | `pnpm test`                                       |
+| Regenerate synthetic fixtures  | `pnpm fixtures:synthetic`                         |
+| Regenerate schema validators   | `pnpm --filter @adhify/release-format validators` |
+| Build the SDK / check its size | `pnpm build` / `pnpm size`                        |
 
-Requires Node.js 24 and pnpm 11. CI also checks that the committed fixtures match the generator's output byte for byte.
+Requires Node.js 24 and pnpm 11. CI also checks that the committed fixtures match the generator's output byte for byte, and that `packages/release-format/src/generated/validators.js` matches the schemas. Run the validators command after any schema change: the validators are precompiled (Ajv standalone) so they also run on Cloudflare Workers, which forbid compiling code at runtime.
 
 ## Licence
 

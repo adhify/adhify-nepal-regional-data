@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   checks:
-    name: Typecheck, lint, tests, synthetic fixtures
+    name: Typecheck, lint, tests, build, size, synthetic fixtures
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -24,5 +24,12 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm test
+      # SDK: compile to dist/ and enforce the code size budget (R1.4).
+      - run: pnpm --filter @adhify/regional build
+      - run: pnpm size
+      # The committed validators must match the schemas (Ajv standalone, scripts/build-validators.ts).
+      - run: pnpm --filter @adhify/release-format validators && git diff --exit-code
+      # The committed compiled release-format (dist/, installed from git by the admin) must match src.
+      - run: pnpm --filter @adhify/release-format build && git diff --exit-code -- packages/release-format/dist
       # The committed synthetic fixtures must match what the generator produces.
       - run: pnpm fixtures:synthetic && git diff --exit-code

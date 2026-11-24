@@ -1,0 +1,45 @@
+{
+  "name": "@adhify/regional",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Offline Nepal regional data: BS/AD dates, holidays, business days and administrative units. No network, no API key.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./calendar": {
+      "types": "./dist/calendar.d.ts",
+      "default": "./dist/calendar.js"
+    },
+    "./holidays": {
+      "types": "./dist/holidays.d.ts",
+      "default": "./dist/holidays.js"
+    },
+    "./business-days": {
+      "types": "./dist/business-days.d.ts",
+      "default": "./dist/business-days.js"
+    },
+    "./admin-units": {
+      "types": "./dist/admin-units.d.ts",
+      "default": "./dist/admin-units.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "bundle:synthetic": "node scripts/bundle.ts --synthetic ../release-format/fixtures/synthetic/calendar@2026.1 ../release-format/fixtures/synthetic/holidays@2026.1 ../release-format/fixtures/synthetic/business-calendar@2026.1 ../release-format/fixtures/synthetic/admin-units@2026.1",
+    "typecheck": "pnpm bundle:synthetic && tsc --noEmit",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "size": "node scripts/size.ts"
+  },
+  "devDependencies": {
+    "@adhify/release-format": "workspace:*",
+    "@types/node": "24.19.2",
+    "typescript": "6.0.3"
+  }
+}

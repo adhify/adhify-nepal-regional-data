@@ -27,6 +27,18 @@ importers:
         specifier: 5.1.1
         version: 5.1.1(@types/node@24.19.2)(vite@8.3.8(@types/node@24.19.2))
 
+  packages/regional:
+    devDependencies:
+      '@adhify/release-format':
+        specifier: workspace:*
+        version: link:../release-format
+      '@types/node':
+        specifier: 24.19.2
+        version: 24.19.2
+      typescript:
+        specifier: 6.0.3
+        version: 6.0.3
+
   packages/release-format:
     dependencies:
       ajv:

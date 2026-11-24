@@ -10,7 +10,9 @@
     "format": "prettier --write .",
     "test": "vitest run",
     "fixtures:synthetic": "pnpm --filter @adhify/release-format fixtures:synthetic",
-    "validate": "node packages/release-format/src/cli.ts"
+    "validate": "node packages/release-format/src/cli.ts",
+    "build": "pnpm --filter @adhify/release-format build && pnpm --filter @adhify/regional build",
+    "size": "pnpm --filter @adhify/regional size"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

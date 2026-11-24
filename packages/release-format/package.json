@@ -6,13 +6,22 @@
   "license": "Apache-2.0",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "default": "./dist/node.js"
+    },
     "./schemas/*": "./schemas/*"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "fixtures:synthetic": "node scripts/build-synthetic-fixtures.ts",
-    "validate": "node src/cli.ts"
+    "validate": "node src/cli.ts",
+    "validators": "node scripts/build-validators.ts",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && mkdir -p dist/generated && cp src/generated/validators.js src/generated/validators.d.ts dist/generated/"
   },
   "dependencies": {
     "ajv": "8.20.0"

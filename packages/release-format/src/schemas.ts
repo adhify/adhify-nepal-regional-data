@@ -1,25 +1,17 @@
-// Structural validation with Ajv against the published JSON Schemas (ADR 0002).
-import Ajv2020, { type ErrorObject, type ValidateFunction } from 'ajv/dist/2020.js';
-import adminUnits from '../schemas/admin-units.schema.json' with { type: 'json' };
-import boundaries from '../schemas/boundaries.schema.json' with { type: 'json' };
-import businessCalendar from '../schemas/business-calendar.schema.json' with { type: 'json' };
-import calendar from '../schemas/calendar.schema.json' with { type: 'json' };
-import common from '../schemas/common.schema.json' with { type: 'json' };
-import manifest from '../schemas/manifest.schema.json' with { type: 'json' };
-import holidays from '../schemas/holidays.schema.json' with { type: 'json' };
+// Structural validation against the published JSON Schemas (ADR 0002), with validators that
+// scripts/build-validators.ts precompiled from those schemas (Ajv standalone). No code is compiled at
+// runtime, so this also runs on Cloudflare Workers, where `new Function` is forbidden.
+import type { ErrorObject } from 'ajv';
+import * as generated from './generated/validators.js';
 import type { Dataset, Issue } from './types.ts';
 
-// Default strict mode: unknown keywords and invalid schemas fail at startup.
-const ajv = new Ajv2020({ allErrors: true, allowUnionTypes: true });
-ajv.addSchema(common);
-
-const validators: Record<Dataset | 'manifest', ValidateFunction> = {
-  manifest: ajv.compile(manifest),
-  calendar: ajv.compile(calendar),
-  holidays: ajv.compile(holidays),
-  'business-calendar': ajv.compile(businessCalendar),
-  'admin-units': ajv.compile(adminUnits),
-  boundaries: ajv.compile(boundaries),
+const validators: Record<Dataset | 'manifest', generated.StandaloneValidator> = {
+  manifest: generated.manifest,
+  calendar: generated.calendar,
+  holidays: generated.holidays,
+  'business-calendar': generated.businessCalendar,
+  'admin-units': generated.adminUnits,
+  boundaries: generated.boundaries,
 };
 
 function toIssues(file: string, errors: ErrorObject[] | null | undefined): Issue[] {
