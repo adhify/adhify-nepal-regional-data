@@ -1,0 +1,32 @@
+{
+  "dataset": "calendar",
+  "version": "2026.2",
+  "schema_version": "1.1.0",
+  "created_at": "2026-11-25T07:47:38Z",
+  "coverage": {
+    "bs_years": {
+      "from": 1975,
+      "to": 2095
+    }
+  },
+  "files": [
+    {
+      "path": "data/calendar.json",
+      "sha256": "f8ec81edbccc1f5b4f0a589865e54127b1448aefde4d55eddc9435a008a90cbe",
+      "bytes": 29947,
+      "media_type": "application/json"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-np-panchanga-samiti-calendar",
+      "licence": "n/a",
+      "redistribution_allowed": true
+    }
+  ],
+  "review": {
+    "reviewer": "Adhify Devworks (founder review)",
+    "decision": "approved",
+    "decided_at": "2026-11-25T07:48:13Z"
+  }
+}

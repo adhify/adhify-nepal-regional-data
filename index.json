@@ -1,0 +1,35 @@
+{
+  "catalogue_version": 1,
+  "updated_at": "2026-11-25T07:54:38Z",
+  "releases": [
+    {
+      "dataset": "calendar",
+      "version": "2026.2",
+      "schema_version": "1.1.0",
+      "published_at": "2026-11-25T07:50:46Z",
+      "coverage": {
+        "bs_years": {
+          "from": 1975,
+          "to": 2095
+        }
+      },
+      "sources": [
+        {
+          "id": "src-np-panchanga-samiti-calendar",
+          "licence": "n/a"
+        }
+      ],
+      "key_id": "189b6f58859436b3",
+      "manifest": "calendar/2026.2/manifest.json",
+      "signature": "calendar/2026.2/manifest.sig",
+      "files": [
+        {
+          "path": "calendar/2026.2/data/calendar.json",
+          "sha256": "f8ec81edbccc1f5b4f0a589865e54127b1448aefde4d55eddc9435a008a90cbe",
+          "bytes": 29947,
+          "media_type": "application/json"
+        }
+      ]
+    }
+  ]
+}
