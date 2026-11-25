@@ -2,14 +2,20 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://adhify.com/schemas/release-format/1/calendar.schema.json",
   "title": "BS/AD calendar table",
-  "description": "One record per Bikram Sambat year: the AD date of its first day and the length of each of its 12 months. BS month lengths are a published table, not a formula.",
+  "description": "One record per Bikram Sambat year: the AD date of its first day and the length of each of its 12 months. BS month lengths are a published table, not a formula. Years after the latest approved almanac are marked provisional.",
   "type": "object",
   "additionalProperties": false,
   "required": ["dataset", "version", "schema_version", "records"],
   "properties": {
-    "dataset": { "const": "calendar" },
-    "version": { "$ref": "common.schema.json#/$defs/version" },
-    "schema_version": { "$ref": "common.schema.json#/$defs/schemaVersion" },
+    "dataset": {
+      "const": "calendar"
+    },
+    "version": {
+      "$ref": "common.schema.json#/$defs/version"
+    },
+    "schema_version": {
+      "$ref": "common.schema.json#/$defs/schemaVersion"
+    },
     "records": {
       "type": "array",
       "minItems": 1,
@@ -18,7 +24,11 @@
         "additionalProperties": false,
         "required": ["bs_year", "ad_start", "month_lengths"],
         "properties": {
-          "bs_year": { "type": "integer", "minimum": 1, "maximum": 9999 },
+          "bs_year": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9999
+          },
           "ad_start": {
             "description": "AD date of the first day of the year (1 Baisakh).",
             "$ref": "common.schema.json#/$defs/date"
@@ -27,7 +37,15 @@
             "type": "array",
             "minItems": 12,
             "maxItems": 12,
-            "items": { "type": "integer", "minimum": 29, "maximum": 32 }
+            "items": {
+              "type": "integer",
+              "minimum": 29,
+              "maximum": 32
+            }
+          },
+          "provisional": {
+            "description": "Present (true) when the year's calendar is not yet approved by the publishing authority, e.g. years after the latest approved almanac. Provisional years come after all approved ones and may change in a later release (schema 1.1.0).",
+            "const": true
           }
         }
       }

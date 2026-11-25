@@ -47,6 +47,19 @@ pnpm validate packages/release-format/fixtures/synthetic/holidays@2026.1
 pnpm validate <dir> --publication --public-key <base64> [--admin-units <dir>]
 ```
 
+## Building a release from a spreadsheet
+
+Fill in a copy of [`packages/release-format/templates/calendar.csv`](packages/release-format/templates/calendar.csv) (one row per BS year: the year, the AD date of 1 Baisakh, the 12 month lengths, and `provisional` set to `yes` for years not yet in an approved almanac, blank otherwise) in any spreadsheet app, export it as CSV, then:
+
+```sh
+pnpm release:build calendar --csv <file.csv> --version 2026.1 --source <src-id> \
+  --licence "<licence as recorded in the admin>" [--redistribution-allowed] --out <folder>
+```
+
+It writes `<folder>/calendar@2026.1/` with `data/calendar.json` and `manifest.json` (checksums, sizes and coverage filled in), validates it, and reports any problem by CSV line; nothing is written until everything passes. The data always comes from you and your recorded source; this repository never contains real data. Import the folder in the admin (Releases → Import release) or with `pnpm release:import`. Other datasets follow.
+
+Provisional years (schema 1.1.0) come after all approved years; the SDK reports them with `calendar.isProvisional(year)`, and a later release replaces them once the almanac for that year is approved.
+
 ## Development
 
 | Purpose                        | Command                                           |

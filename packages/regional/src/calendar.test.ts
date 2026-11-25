@@ -109,6 +109,25 @@ describe('calendar (synthetic release)', () => {
     expect(() => parseBs('2901-1-5')).toThrow(InvalidDateError);
   });
 
+  it('says which years are provisional (schema 1.1.0)', async () => {
+    const { manifest, data } = await syntheticRelease('calendar');
+    expect(calendar.isProvisional(2903)).toBe(false);
+    const marked = structuredClone(data);
+    marked.schema_version = '1.1.0';
+    marked.records[2]!.provisional = true;
+    const loaded = loadCalendar({ ...manifest, schema_version: '1.1.0' }, marked);
+    expect([2901, 2902, 2903].map((year) => loaded.isProvisional(year))).toEqual([
+      false,
+      false,
+      true,
+    ]);
+    // Provisional years convert like any other.
+    expect(loaded.toAd({ year: 2903, month: 1, day: 1 })).toBe(
+      calendar.toAd({ year: 2903, month: 1, day: 1 }),
+    );
+    expect(() => loaded.isProvisional(2904)).toThrow(OutOfRangeError);
+  });
+
   it('loads a downloaded release and refuses mismatched or unsupported ones', async () => {
     const { manifest, data } = await syntheticRelease('calendar');
     expect(loadCalendar(manifest, data).toBs('2844-04-13')).toEqual({

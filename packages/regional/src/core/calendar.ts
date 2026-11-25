@@ -23,6 +23,11 @@ export interface Calendar {
   daysInMonth(year: number, month: number): number;
   /** True when the BS date exists in the covered range. */
   isValidBs(bs: BsDate): boolean;
+  /**
+   * True when the release marks this BS year provisional: not yet in an approved almanac, so its
+   * dates may change in a later release. Throws OutOfRangeError for years the release does not cover.
+   */
+  isProvisional(year: number): boolean;
 }
 
 /** Formats a BS date as YYYY-MM-DD. */
@@ -43,6 +48,7 @@ interface Year {
   monthStarts: number[]; // offset of each month's first day from `start`
   lengths: number[];
   length: number;
+  provisional: boolean;
 }
 
 export function createCalendar(release: Release<CalendarData>): Calendar {
@@ -59,6 +65,7 @@ export function createCalendar(release: Release<CalendarData>): Calendar {
       monthStarts,
       lengths: record.month_lengths,
       length: offset,
+      provisional: record.provisional === true,
     };
   });
   const first = years[0];
@@ -131,6 +138,10 @@ export function createCalendar(release: Release<CalendarData>): Calendar {
       const days = yearOf(bsYear).lengths[month - 1];
       if (days === undefined) throw new InvalidDateError(`month ${month} does not exist`);
       return days;
+    },
+
+    isProvisional(bsYear) {
+      return yearOf(bsYear).provisional;
     },
 
     isValidBs(bs) {

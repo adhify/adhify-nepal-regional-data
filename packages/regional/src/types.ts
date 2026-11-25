@@ -18,7 +18,13 @@ export interface CalendarData {
   dataset: 'calendar';
   version: string;
   schema_version: string;
-  records: { bs_year: number; ad_start: string; month_lengths: number[] }[];
+  records: {
+    bs_year: number;
+    ad_start: string;
+    month_lengths: number[];
+    /** Not yet in an approved almanac; may change in a later release. */
+    provisional?: true;
+  }[];
 }
 
 export interface Holiday {

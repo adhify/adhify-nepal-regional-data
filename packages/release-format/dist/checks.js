@@ -29,6 +29,9 @@ export function checkCalendar(file, data, manifest) {
         const previous = data.records[i - 1];
         if (!previous)
             return;
+        if (previous.provisional && !year.provisional) {
+            push('calendar_provisional_order', `/records/${i}/provisional`, `BS ${year.bs_year} is approved but follows provisional BS ${previous.bs_year}; provisional years come last`);
+        }
         if (year.bs_year !== previous.bs_year + 1) {
             push('calendar_gap', `/records/${i}/bs_year`, `BS ${year.bs_year} follows BS ${previous.bs_year}; years must be consecutive`);
             return;

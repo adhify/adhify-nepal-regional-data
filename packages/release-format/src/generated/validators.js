@@ -1371,7 +1371,7 @@ return errors === 0;
 validate20.evaluated = {"props":true,"dynamicProps":false,"dynamicItems":false};
 
 export const calendar = validate22;
-const schema42 = {"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://adhify.com/schemas/release-format/1/calendar.schema.json","title":"BS/AD calendar table","description":"One record per Bikram Sambat year: the AD date of its first day and the length of each of its 12 months. BS month lengths are a published table, not a formula.","type":"object","additionalProperties":false,"required":["dataset","version","schema_version","records"],"properties":{"dataset":{"const":"calendar"},"version":{"$ref":"common.schema.json#/$defs/version"},"schema_version":{"$ref":"common.schema.json#/$defs/schemaVersion"},"records":{"type":"array","minItems":1,"items":{"type":"object","additionalProperties":false,"required":["bs_year","ad_start","month_lengths"],"properties":{"bs_year":{"type":"integer","minimum":1,"maximum":9999},"ad_start":{"description":"AD date of the first day of the year (1 Baisakh).","$ref":"common.schema.json#/$defs/date"},"month_lengths":{"type":"array","minItems":12,"maxItems":12,"items":{"type":"integer","minimum":29,"maximum":32}}}}}}};
+const schema42 = {"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://adhify.com/schemas/release-format/1/calendar.schema.json","title":"BS/AD calendar table","description":"One record per Bikram Sambat year: the AD date of its first day and the length of each of its 12 months. BS month lengths are a published table, not a formula. Years after the latest approved almanac are marked provisional.","type":"object","additionalProperties":false,"required":["dataset","version","schema_version","records"],"properties":{"dataset":{"const":"calendar"},"version":{"$ref":"common.schema.json#/$defs/version"},"schema_version":{"$ref":"common.schema.json#/$defs/schemaVersion"},"records":{"type":"array","minItems":1,"items":{"type":"object","additionalProperties":false,"required":["bs_year","ad_start","month_lengths"],"properties":{"bs_year":{"type":"integer","minimum":1,"maximum":9999},"ad_start":{"description":"AD date of the first day of the year (1 Baisakh).","$ref":"common.schema.json#/$defs/date"},"month_lengths":{"type":"array","minItems":12,"maxItems":12,"items":{"type":"integer","minimum":29,"maximum":32}},"provisional":{"description":"Present (true) when the year's calendar is not yet approved by the publishing authority, e.g. years after the latest approved almanac. Provisional years come after all approved ones and may change in a later release (schema 1.1.0).","const":true}}}}}};
 
 function validate22(data, {instancePath="", parentData, parentDataProperty, rootData=data, dynamicAnchors={}}={}){
 /*# sourceURL="https://adhify.com/schemas/release-format/1/calendar.schema.json" */;
@@ -1547,7 +1547,7 @@ vErrors.push(err13);
 errors++;
 }
 for(const key1 in data4){
-if(!(((key1 === "bs_year") || (key1 === "ad_start")) || (key1 === "month_lengths"))){
+if(!((((key1 === "bs_year") || (key1 === "ad_start")) || (key1 === "month_lengths")) || (key1 === "provisional"))){
 const err14 = {instancePath:instancePath+"/records/" + i0,schemaPath:"#/properties/records/items/additionalProperties",keyword:"additionalProperties",params:{additionalProperty: key1},message:"must NOT have additional properties"};
 if(vErrors === null){
 vErrors = [err14];
@@ -1689,9 +1689,9 @@ vErrors.push(err25);
 errors++;
 }
 }
-}
-else {
-const err26 = {instancePath:instancePath+"/records/" + i0,schemaPath:"#/properties/records/items/type",keyword:"type",params:{type: "object"},message:"must be object"};
+if(data4.provisional !== undefined){
+if(true !== data4.provisional){
+const err26 = {instancePath:instancePath+"/records/" + i0+"/provisional",schemaPath:"#/properties/records/items/properties/provisional/const",keyword:"const",params:{allowedValue: true},message:"must be equal to constant"};
 if(vErrors === null){
 vErrors = [err26];
 }
@@ -1703,7 +1703,7 @@ errors++;
 }
 }
 else {
-const err27 = {instancePath:instancePath+"/records",schemaPath:"#/properties/records/type",keyword:"type",params:{type: "array"},message:"must be array"};
+const err27 = {instancePath:instancePath+"/records/" + i0,schemaPath:"#/properties/records/items/type",keyword:"type",params:{type: "object"},message:"must be object"};
 if(vErrors === null){
 vErrors = [err27];
 }
@@ -1715,12 +1715,24 @@ errors++;
 }
 }
 else {
-const err28 = {instancePath,schemaPath:"#/type",keyword:"type",params:{type: "object"},message:"must be object"};
+const err28 = {instancePath:instancePath+"/records",schemaPath:"#/properties/records/type",keyword:"type",params:{type: "array"},message:"must be array"};
 if(vErrors === null){
 vErrors = [err28];
 }
 else {
 vErrors.push(err28);
+}
+errors++;
+}
+}
+}
+else {
+const err29 = {instancePath,schemaPath:"#/type",keyword:"type",params:{type: "object"},message:"must be object"};
+if(vErrors === null){
+vErrors = [err29];
+}
+else {
+vErrors.push(err29);
 }
 errors++;
 }

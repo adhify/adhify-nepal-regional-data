@@ -57,6 +57,8 @@ export interface CalendarYear {
   bs_year: number;
   ad_start: string;
   month_lengths: number[];
+  /** Not yet approved by the publishing authority; may change in a later release (schema 1.1.0). */
+  provisional?: true;
 }
 
 export interface Holiday {

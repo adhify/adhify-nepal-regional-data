@@ -12,7 +12,8 @@
     "fixtures:synthetic": "pnpm --filter @adhify/release-format fixtures:synthetic",
     "validate": "node packages/release-format/src/cli.ts",
     "build": "pnpm --filter @adhify/release-format build && pnpm --filter @adhify/regional build",
-    "size": "pnpm --filter @adhify/regional size"
+    "size": "pnpm --filter @adhify/regional size",
+    "release:build": "pnpm --filter @adhify/release-format release:build"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

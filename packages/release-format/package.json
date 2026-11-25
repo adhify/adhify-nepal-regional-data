@@ -21,7 +21,8 @@
     "fixtures:synthetic": "node scripts/build-synthetic-fixtures.ts",
     "validate": "node src/cli.ts",
     "validators": "node scripts/build-validators.ts",
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && mkdir -p dist/generated && cp src/generated/validators.js src/generated/validators.d.ts dist/generated/"
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && mkdir -p dist/generated && cp src/generated/validators.js src/generated/validators.d.ts dist/generated/",
+    "release:build": "node src/build-cli.ts"
   },
   "dependencies": {
     "ajv": "8.20.0"
